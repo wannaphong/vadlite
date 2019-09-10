@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static ethz.ch.vadlite.ConfigVAD.PREDICTION;
+
 
 public class MainActivity extends WearableActivity {
 
@@ -116,22 +118,26 @@ public class MainActivity extends WearableActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            String classification_res = "";
+
             int param = intent.getIntExtra("param", 0);
+            int voiceCount = intent.getIntExtra("voice count", -1);
             Log.d("Param",""+param);
+            String prediction = PREDICTION[param];
 
-            if (param == 1){
-                classification_res = "SPEAKING";
-                classification.setText("SPEAKING");
-            }else if (param == 0){
-                classification_res = "NOISE";
-                classification.setText("NOISE");
-            }else{
-                classification_res = "SILENCE";
-                classification.setText("SILENCE");
-            }
+            classification.setText(prediction + " " + voiceCount);
 
-            final Toast toast = Toast.makeText(context, classification_res, Toast.LENGTH_SHORT);
+//            if (param == 1){
+//                classification_res = "SPEAKING";
+//                classification.setText("SPEAKING " + voiceCount);
+//            }else if (param == 0){
+//                classification_res = "NOISE";
+//                classification.setText("NOISE " + voiceCount);
+//            }else{
+//                classification_res = "SILENCE";
+//                classification.setText("SILENCE "  + voiceCount);
+//            }
+
+            final Toast toast = Toast.makeText(context, prediction, Toast.LENGTH_SHORT);
             toast.show();
 
             Handler handler = new Handler();

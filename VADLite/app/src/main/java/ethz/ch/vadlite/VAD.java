@@ -12,6 +12,7 @@ import static ethz.ch.vadlite.ConfigVAD.NO_OF_WINDOWS_PER_DURATION;
 import static ethz.ch.vadlite.ConfigVAD.RMS_THRESHOLD;
 import static ethz.ch.vadlite.ConfigVAD.SAMPLES_PER_FRAME;
 import static ethz.ch.vadlite.ConfigVAD.VOICE_THRESHOLD;
+import static ethz.ch.vadlite.ConfigVAD.voiceCount;
 
 /**
  * This class implements a voice activity detection module. It is a 2-stage module
@@ -75,6 +76,8 @@ public class VAD {
                 e.printStackTrace();
             }
         }
+
+        voiceCount = voiced;
 
         //Check if number of samples classified as voiced is greater than threshold
         if (voiced >= VOICE_THRESHOLD){

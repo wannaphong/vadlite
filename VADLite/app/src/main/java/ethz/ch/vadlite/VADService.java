@@ -10,6 +10,7 @@ import android.widget.Toast;
 import static ethz.ch.vadlite.ConfigVAD.DEBUG_MODE;
 import static ethz.ch.vadlite.ConfigVAD.SAMPLES_PER_FRAME;
 import static ethz.ch.vadlite.ConfigVAD.VOICE_THRESHOLD;
+import static ethz.ch.vadlite.ConfigVAD.voiceCount;
 import static ethz.ch.vadlite.VAD.classifyFrame;
 import static ethz.ch.vadlite.VAD.displayVADConfiguration;
 import static ethz.ch.vadlite.VAD.isSilence;
@@ -48,7 +49,7 @@ public class VADService extends Service implements MicrophoneRecorder.Microphone
     public void microphoneBuffer(short[] buffer, int window_size) {
 //        Log.i(TAG, "About to classify total duration... " + System.currentTimeMillis());
 
-        int classification = -1;
+        int classification = 2;
         boolean checkSilence = isSilence(buffer);
 
         if (!checkSilence) {
@@ -58,6 +59,8 @@ public class VADService extends Service implements MicrophoneRecorder.Microphone
             totalCount++;
             classification = classifyFrame(buffer, window_size);
 //            Log.i(TAG, "Done classification of duration... " + System.currentTimeMillis());
+        }else{
+            voiceCount = -1; // set voice count to -1
         }
 
 
@@ -87,6 +90,7 @@ public class VADService extends Service implements MicrophoneRecorder.Microphone
     public void  sendSpeechStatusToUI(int classification) {
         Intent intent = new Intent(BROADCAST_CLASSIFICATION);
         intent.putExtra("param", classification);
+        intent.putExtra("voice count", voiceCount);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 

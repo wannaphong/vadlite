@@ -17,6 +17,9 @@ public class ConfigVAD {
     public static final int NO_OF_WINDOWS_PER_DURATION = CLASSIFICATION_DURATION_MS / FRAME_SIZE_MS; //40 for 1 sec, 200 for 5 sec
     public static int VOICE_THRESHOLD = NO_OF_WINDOWS_PER_DURATION/2; //40 for 1 sec, 100 for 5 sec; //threshold for deciding classification of window is half the total count
     public static boolean DEBUG_MODE = true;
+    public static int voiceCount = 0;
+
+    public static String PREDICTION[] = {"NOISE","SPEAKING", "SILENCE"};
 
     //Speech Classification Constants
     static boolean shouldNormalize = true;
